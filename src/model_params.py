@@ -1,12 +1,12 @@
-import random
+from scipy.stats import randint, uniform
 
 LR_PARAMS = {
-    "max_iter" : random.randint(500, 1000),
-    "penalty" : random.choice(["L1", "L2"]),
-    "C" : random.uniform(0.1, 1.0),
-    "solver" : random.choice(["lbfgs", "liblinear", "newton-cg", "newton-cholesky", "sag", "saga"]),
-    "random_state" : 42,
-    "multi_class" : "auto"
+    "max_iter" : randint(500, 1000),
+    "penalty" : ["l1", "l2"],
+    "C" : uniform(0.1, 0.9),
+    "solver" : ["liblinear", "saga"],
+    "random_state" : [42],
+    "multi_class" : ["auto"]
 }
 
 
@@ -16,5 +16,5 @@ RANDOM_SEARCH_PARAMS = {
     "cv" : 5,
     "verbose" : 1,
     "n_jobs" : -1,
-    "random_state" : 42
+    "random_state" : 42,
 }
