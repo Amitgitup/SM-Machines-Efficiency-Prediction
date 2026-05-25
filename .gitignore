@@ -2,4 +2,3 @@ logs/
 venv/
 artifacts/
 __pycache__/
-mlflow.db
