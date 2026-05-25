@@ -5,8 +5,7 @@ LR_PARAMS = {
     "penalty" : ["l1", "l2"],
     "C" : uniform(0.1, 0.9),
     "solver" : ["liblinear", "saga"],
-    "random_state" : [42],
-    "multi_class" : ["auto"]
+    "random_state" : [42]
 }
 
 
@@ -15,6 +14,6 @@ RANDOM_SEARCH_PARAMS = {
     "scoring" : "accuracy",
     "cv" : 5,
     "verbose" : 1,
-    "n_jobs" : -1,
+    "n_jobs" : 1,
     "random_state" : 42,
 }

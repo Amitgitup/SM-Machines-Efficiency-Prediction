@@ -10,7 +10,7 @@ from src.model_params import *
 
 
 import mlflow
-# import mlflow.sklearn
+import mlflow.sklearn
 
 from src.logger import get_logger
 from src.custom_exception import CustomException 
@@ -50,7 +50,7 @@ class ModelTraining():
         try:
             logger.info("Initializing our model")
 
-            self.clf = LogisticRegression()
+            self.clf = LogisticRegression(multi_class='ovr')
             
             logger.info("Starting our Hyperparameter tuning")
 
@@ -123,6 +123,8 @@ class ModelTraining():
 
     def run(self):
         try:
+            mlflow.set_tracking_uri("sqlite:///mlflow.db")
+            mlflow.set_experiment("SM_Machine_Efficiency_Prediction")
             with mlflow.start_run():
                 logger.info("Starting our Model Training")
 
@@ -139,9 +141,13 @@ class ModelTraining():
                 metrics = self.evaluate_model()
                 self.save_model(best_lr)
 
-                logger.info("Logging the model into MLFOW")
+                logger.info("Logging the model into MLFLOW")
 
-                mlflow.log_artifact(os.path.join(self.model_path, "model.pkl"), artifact_path="models")
+                # The recommended way is to use mlflow.sklearn.log_model for scikit-learn models
+                mlflow.sklearn.log_model(best_lr, "model")
+                # Also logging the raw pkl file as requested by the initial structure
+                mlflow.log_artifact(os.path.join(self.model_path, "model.pkl"), artifact_path="raw_models")
+                
                 logger.info("Logging Params and metrics to MLFLOW")
                 mlflow.log_params(best_lr.get_params())
                 mlflow.log_metrics(metrics)
