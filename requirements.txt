@@ -3,7 +3,13 @@ pandas
 matplotlib
 seaborn
 scikit-learn
-flask
+fastapi
+uvicorn
+jinja2
+python-multipart
+sqlalchemy
+passlib[bcrypt]
+PyJWT
 joblib
 ipykernel
 lightgbm

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO Optimization -->
+    <title>Smart Manufacturing Machine Efficiency</title>
+    <meta name="description" content="AI-powered tool for predicting smart manufacturing machine efficiency based on telemetry data.">
+    
+    <!-- Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    
+    <!-- FastAPI Static referencing uses `path` rather than `filename` -->
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="text-align: left;">
+                    <h1>Machine Efficiency</h1>
+                    <p>Predict manufacturing equipment efficiency accurately.</p>
+                </div>
+                <div style="text-align: right;">
+                    <p style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">Hi, {{ current_user.username }}</p>
+                    <a href="/logout" style="color: var(--danger); text-decoration: none; font-size: 0.875rem;">Logout</a>
+                </div>
+            </div>
+        </header>
+
+        <form method="post" action="/">
+            <div class="form-grid">
+                {% for feature in features %}
+                <div class="input-group">
+                    <label for="{{ feature }}">{{ feature.replace('_', ' ') }}</label>
+                    <input type="number" step="any" id="{{ feature }}" name="{{ feature }}" required 
+                           placeholder="0.0">
+                </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit">Predict Efficiency</button>
+        </form>
+
+        {% if prediction %}
+        <div class="result-card">
+            <h2>Prediction Result</h2>
+            {% if "Error" in prediction %}
+            <div class="prediction-value prediction-Error">{{ prediction }}</div>
+            {% else %}
+            <div class="prediction-value prediction-{{ prediction }}">{{ prediction }}</div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Using path=... as per FastAPI spec instead of filename=... -->
+    <script src="{{ url_for('static', path='styles.js') }}"></script>
+</body>
+</html>

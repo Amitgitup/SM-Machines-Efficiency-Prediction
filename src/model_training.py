@@ -10,7 +10,7 @@ from src.model_params import *
 
 
 import mlflow
-import mlflow.sklearn
+import mlflow.sklearn       ## no issuse while importing mlflow.sklearn
 
 from src.logger import get_logger
 from src.custom_exception import CustomException 
